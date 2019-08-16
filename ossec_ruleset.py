@@ -605,6 +605,12 @@ def download_ruleset():
         logger.log("\tError extracting file '{0}': {1}.".format(output, e))
         sys.exit(2)
 
+    try:
+        os.rename("{0}/ossec-rules-tvx-rules/{1}".format(downloads_directory, "ossec-rules-master"), "{0}/ossec-rules-tvx-rules/{1}".format(downloads_directory, "test"))
+    except Exception as e:
+        logger.log("\tError BULLSHIT: {0}.".format(e))
+        sys.exit(2)
+
     # Update main directory
     try:
         content=os.listdir(downloads_directory)
