@@ -599,7 +599,7 @@ def download_ruleset():
         shutil.rmtree(old_extracted_files)
 
     try:
-        with contextlib.closing(zipfile.ZipFile(test)) as z:
+        with contextlib.closing(zipfile.ZipFile(output)) as z:
             z.extractall("{0}/ossec-rules-tvx-rules/".format(downloads_directory))
     except Exception as e:
         logger.log("\tError extracting file '{0}': {1}.".format(output, e))
