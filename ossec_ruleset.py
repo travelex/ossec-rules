@@ -588,6 +588,9 @@ def download_ruleset():
 
     if not os.path.exists(downloads_directory):
         os.makedirs(downloads_directory)
+    
+    if not os.path.exists("{0}/ossec-rules-tvx-rules/".format(downloads_directory)):
+        os.makedirs("{0}/ossec-rules-tvx-rules/".format(downloads_directory))
 
     download_file(url_ruleset, output)
 
@@ -596,14 +599,21 @@ def download_ruleset():
         shutil.rmtree(old_extracted_files)
 
     try:
-        with contextlib.closing(zipfile.ZipFile(output)) as z:
-            z.extractall(downloads_directory)
+        with contextlib.closing(zipfile.ZipFile(test)) as z:
+            z.extractall("{0}/ossec-rules-tvx-rules/".format(downloads_directory))
     except Exception as e:
         logger.log("\tError extracting file '{0}': {1}.".format(output, e))
         sys.exit(2)
 
     # Update main directory
-    shutil.copyfile("{0}/ossec-rules-tvx-rules/VERSION".format(downloads_directory), version_path)
+    try:
+        content=os.listdir(downloads_directory)
+        for item in content:
+            print(item)
+        shutil.copyfile("{0}/ossec-rules-tvx-rules/VERSION".format(downloads_directory), version_path)
+    except Exception as e:
+        logger.log("\tError missing file '{0}': {1} after download and unzip.".format("{0}/ossec-rules-tvx-rules/VERSION".format(downloads_directory), e))
+        sys.exit(2)
 
     new_python_script = "{0}/ossec-rules-tvx-rules/ossec_ruleset.py".format(downloads_directory)
     if os.path.isfile(new_python_script):
