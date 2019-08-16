@@ -1067,8 +1067,8 @@ Configuration file syntax using option -A:
 if __name__ == "__main__":
     # Config
     MAX_BACKUPS = 50
-    url_ruleset = "https://github.com/chrisdpa-tvx/ossec-rules/archive/tvx-rules.zip"
-    ossec_path = "/var/ossec"
+    url_ruleset = "https://github.com/travelex/ossec-rules/archive/tvx-rules.zip"
+    ossec_path = "/etc/ossec"
     ossec_conf = "{0}/etc/ossec.conf".format(ossec_path)
     updater_path = "{0}/update/ruleset".format(ossec_path)
     bk_directory = "{0}/backups".format(updater_path)
