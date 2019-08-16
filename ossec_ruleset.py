@@ -584,7 +584,7 @@ def setup_wazuh_directory_structure():
 
 
 def download_ruleset():
-    output = "{0}/ruleset.zip".format(downloads_directory)
+    output = "{0}/ossec-rules-tvx-rules.zip".format(downloads_directory)
 
     if not os.path.exists(downloads_directory):
         os.makedirs(downloads_directory)
