@@ -600,26 +600,15 @@ def download_ruleset():
 
     try:
         with contextlib.closing(zipfile.ZipFile(output)) as z:
-            z.extractall("{0}/ossec-rules-tvx-rules/".format(downloads_directory))
+            z.extractall("{0}/".format(downloads_directory))
     except Exception as e:
         logger.log("\tError extracting file '{0}': {1}.".format(output, e))
         sys.exit(2)
 
-    try:
-        os.rename("{0}/ossec-rules-tvx-rules/{1}".format(downloads_directory, "ossec-rules-master"), "{0}/ossec-rules-tvx-rules/{1}".format(downloads_directory, "test"))
-    except Exception as e:
-        logger.log("\tError BULLSHIT: {0}.".format(e))
-        sys.exit(2)
+    os.rename("{0}/{1}".format(downloads_directory, "ossec-rules-master"), "{0}/{1}".format(downloads_directory, "ossec-rules-tvx-rules"))
 
     # Update main directory
-    try:
-        content=os.listdir(downloads_directory)
-        for item in content:
-            print(item)
-        shutil.copyfile("{0}/ossec-rules-tvx-rules/VERSION".format(downloads_directory), version_path)
-    except Exception as e:
-        logger.log("\tError missing file '{0}': {1} after download and unzip.".format("{0}/ossec-rules-tvx-rules/VERSION".format(downloads_directory), e))
-        sys.exit(2)
+    shutil.copyfile("{0}/ossec-rules-tvx-rules/VERSION".format(downloads_directory), version_path)
 
     new_python_script = "{0}/ossec-rules-tvx-rules/ossec_ruleset.py".format(downloads_directory)
     if os.path.isfile(new_python_script):
